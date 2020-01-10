@@ -5,12 +5,12 @@ import os.path
 versionString = '8.0.1'
 
 if __name__ == '__main__':
-    setup(name='lucem_illud',
+    setup(name='lucem_illud_2020',
         version = versionString,
-        author="James Evans, Reid McIlroy-Young",
-        author_email = "reidmcy@uchicago.edu",
+        author="James Evans, Bhargav Srinivasa Desikan",
+        author_email = "bhargav@uchicago.edu",
         license = 'GPL',
-        url="https://github.com/Computational-Content-Analysis-2018/lucem-illud",
+        url="https://github.com/Computational-Content-Analysis-2020/lucem_illud_2020",
         packages = find_packages(),
         install_requires = [
                 'numpy',
@@ -23,20 +23,20 @@ if __name__ == '__main__':
                 'wordcloud',
                 'scipy',
                 'seaborn',
-                'scikit-learn==0.19.1',
+                'scikit-learn',
                 'nltk',
-                'gensim==3.2.0',
+                'gensim',
                 'matplotlib',
                 'pyanno3',
                 'beautifulsoup4',
                 'graphviz',
                 'boto3',
-                'networkx==2.1',
+                'networkx',
                 'pydub',
                 'speechrecognition',
                 'pysoundfile',
-                'scikit-image==0.13.1',
-                'Pillow==5.0.0',
+                'scikit-image',
+                'Pillow',
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
@@ -54,6 +54,6 @@ if __name__ == '__main__':
         'Topic :: Text Processing',
         ],
         entry_points={'console_scripts': [
-                  'cta2018-setup-user = lucem_illud._backend:makeUser',
+                  'cta2020-setup-user = lucem_illud._backend:makeUser',
               ]},
     )
