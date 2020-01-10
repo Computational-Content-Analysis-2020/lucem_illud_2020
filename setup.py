@@ -37,6 +37,7 @@ if __name__ == '__main__':
                 'pysoundfile',
                 'scikit-image',
                 'IPython',
+                'spacy',
                 'Pillow',
         ],
         classifiers = [
