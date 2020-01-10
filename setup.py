@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 'speechrecognition',
                 'pysoundfile',
                 'scikit-image',
-                'IPython'
+                'IPython',
                 'Pillow',
         ],
         classifiers = [
