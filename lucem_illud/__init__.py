@@ -8,7 +8,7 @@ import nltk
 #setting the path for nltk
 try:
     #adding path for both local and server, only one of these will actually be used at a time
-    nltk.data.path.append('/project2/macs60000/shared_data/nltk')
+    nltk.data.path.append('/project2/soci40133/shared_data/nltk')
     nltk.data.path.append('../data')
     #Check that everything is in place
     nltk.corpus.gutenberg.fileids()
@@ -41,15 +41,15 @@ import requests
 import re
 import pkg_resources
 
-_setupURL = 'https://raw.githubusercontent.com/Computational-Content-Analysis-2018/lucem_illud/master/setup.py'
+_setupURL = 'https://raw.githubusercontent.com/Computational-Content-Analysis-2020/lucem_illud_2020/master/setup.py'
 
 def _checkCurrentVersion():
     r = requests.get(_setupURL, timeout=0.5)
     serverVersion = re.search(r'versionString = \'(.+)\'', r.text).group(1)
-    localVersion = pkg_resources.get_distribution('lucem_illud').version
+    localVersion = pkg_resources.get_distribution('lucem_illud_2020').version
     if serverVersion != serverVersion:
         print('lucem_illud is out of date, please update')
-        print('pip install -U git+git://github.com/Computational-Content-Analysis-2018/lucem_illud.git')
+        print('pip install -U git+git://github.com/Computational-Content-Analysis-2020/lucem_illud_2020.git')
 
 try:
     checkCurrentVersion()

@@ -54,6 +54,6 @@ if __name__ == '__main__':
         'Topic :: Text Processing',
         ],
         entry_points={'console_scripts': [
-                  'cta2020-setup-user = lucem_illud._backend:makeUser',
+                  'cta2020-setup-user = lucem_illud_2020._backend:makeUser',
               ]},
     )
