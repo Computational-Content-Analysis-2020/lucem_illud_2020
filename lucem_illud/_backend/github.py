@@ -14,8 +14,8 @@ import numpy as np
 
 apiURL = 'https://api.github.com'
 tokenFile = '../token.txt'
-orgName = 'Computational-Content-Analysis-2018'
-repoName = 'content-analysis-2018'
+orgName = 'Computational-Content-Analysis-2020'
+repoName = 'Content-Analysis-2020'
 
 def getAllStudents(df, outputDir, auth = None, name = repoName):
     os.makedirs(outputDir, exist_ok = True)
@@ -33,11 +33,11 @@ def getStudentRepo(ghName, outputName, auth = None, name = repoName):
         repoDat = getGithubURL(repoURL, auth = auth)
     except RuntimeError as e1:
         try:
-            repoURL = "/repos/{}/Content-Analysis".format(ghName, name)
+            repoURL = "/repos/{}/Content-Analysis-2020".format(ghName, name)
             repoDat = getGithubURL(repoURL, auth = auth)
         except RuntimeError as e2:
             try:
-                repoURL = "/repos/{}/Computational-Content-Analysis-2018".format(ghName, name)
+                repoURL = "/repos/{}/Computational-Content-Analysis-2020".format(ghName, name)
                 repoDat = getGithubURL(repoURL, auth = auth)
             except RuntimeError as e3:
                 raise e1
@@ -72,8 +72,8 @@ def makeStudentRepo(targetDir = '.', name = repoName):
 
     data = {
         "name": name,
-        "description": 'Assignments for Computational Content Analysis 2018',
-        "homepage": "https://github.com/Computational-Content-Analysis-2018",
+        "description": 'Assignments for Computational Content Analysis 2020',
+        "homepage": "https://github.com/Computational-Content-Analysis-2020",
         "private": False,
         "has_issues": True,
         "has_projects": False,
@@ -93,7 +93,7 @@ def makeStudentRepo(targetDir = '.', name = repoName):
     else:
         repo = git.repo.Repo(repoDir)
     print("Adding the notebooks")
-    base = repo.create_remote('base', url='https://github.com/Computational-Content-Analysis-2018/Content-Analysis.git')
+    base = repo.create_remote('base', url='https://github.com/Computational-Content-Analysis-2020/Content-Analysis-2020.git')
     base.pull('master')
     print("Pushing to GitHub, you may have to enter your login details again")
     while True:
@@ -161,7 +161,7 @@ def makeCommentsRepo(classTime, articleCite, articleURL, auth, org = orgName):
     data = {
         "name": repoName,
         "description": articleCite,
-        "homepage": "https://github.com/Computational-Content-Analysis-2018",
+        "homepage": "https://github.com/Computational-Content-Analysis-2020",
         "private": False,
         "has_issues": True,
         "has_projects": False,
