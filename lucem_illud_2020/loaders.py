@@ -11,7 +11,7 @@ import os.path #For managing file paths
 import re
 import tarfile
 
-from .proccessing import normalizeTokens, stop_words_basic, stemmer_basic, trainTestSplit
+# from .proccessing import normalizeTokens, stop_words_basic, stemmer_basic, trainTestSplit
 
 dataDirectory = '../data'
 

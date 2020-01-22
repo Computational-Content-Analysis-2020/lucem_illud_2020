@@ -7,7 +7,7 @@ import numpy as np
 import nltk
 import gensim
 
-from .proccessing import stemmer_basic, stop_words_basic, normalizeTokens
+# from .proccessing import stemmer_basic, stop_words_basic, normalizeTokens
 
 def vecToVar(vec):
     var = torch.autograd.Variable(torch.from_numpy(np.stack(vec)).unsqueeze(0))

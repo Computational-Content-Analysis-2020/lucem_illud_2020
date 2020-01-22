@@ -25,16 +25,16 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-# from .data_dirs  import *
-# from .downloaders import *
-# from .loaders import *
-# from .visualizers import *
+from .data_dirs  import *
+from .downloaders import *
+from .loaders import *
+from .visualizers import *
 # from .proccessing import *
-# from .cartoons import *
-# from .metrics import *
-# from .bayesian import *
+from .cartoons import *
+from .metrics import *
+from .bayesian import *
 
-# from .info_extract import *
+from .info_extract import *
 
 
 import requests
