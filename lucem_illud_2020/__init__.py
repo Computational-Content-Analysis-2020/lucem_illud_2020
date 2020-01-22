@@ -3,21 +3,6 @@ import os
 if os.name == 'nt':
     os.environ['JAVAHOME'] =  "C:/Program Files/Java/jdk1.8.0_161/bin/java.exe"
 
-import nltk
-
-#setting the path for nltk
-try:
-    #adding path for both local and server, only one of these will actually be used at a time
-    nltk.data.path.append('/project2/soci40133/shared_data/nltk')
-    nltk.data.path.append('../data')
-    #Check that everything is in place
-    nltk.corpus.gutenberg.fileids()
-except LookupError:
-    print("You have to download all the nltk documents")
-    print("Downloading to ../data this should only take a couple minutes")
-    nltk.download('all', download_dir = '../data')
-    nltk.data.path.append('../data')
-
 #gensim uses a couple of deprecated features
 #we can't do anything about them so lets ignore them
 import warnings
@@ -29,7 +14,7 @@ from .data_dirs  import *
 from .downloaders import *
 from .loaders import *
 from .visualizers import *
-# from .proccessing import *
+from .proccessing import *
 from .cartoons import *
 from .metrics import *
 from .bayesian import *

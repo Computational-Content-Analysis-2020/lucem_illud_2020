@@ -1,34 +1,43 @@
-import nltk
 import numpy as np
 import pandas
 
 import collections
 import random
 
+import spacy
 
-stop_words_basic = nltk.corpus.stopwords.words('english')
-stemmer_basic = nltk.stem.snowball.SnowballStemmer('english')
-lemmer_basic = nltk.stem.WordNetLemmatizer()
 
-def normalizeTokens(tokenLst, stopwordLst = None, stemmer = None, lemmer = None):
+nlp = spacy.load("en")
+
+def word_tokenize(word_list):
+    tokenized = []
+    doc = nlp(word_list)
+    for token in doc:
+        if not token.is_punct and len(token.text.strip()) > 0:
+            tokenized.append(str(token))
+    return tokenized
+
+def sent_tokenize(word_list):
+    doc = nlp(word_list)
+    sentences = [sent.string.strip() for sent in doc.sents]
+    return sentences
+
+def normalizeTokens(word_list, extra_stop=[]):
     #We can use a generator here as we just need to iterate over it
+    normalized = []
+    doc = nlp(word_list.lower())
+    if len(extra_stop) > 0:
+        for stopword in extra_stop:
+            lexeme = nlp.vocab[stopword]
+            lexeme.is_stop = True
 
-    #Lowering the case and removing non-words
-    workingIter = (w.lower() for w in tokenLst if w.isalpha())
+    for w in doc:
+        # if it's not a stop word or punctuation mark, add it to our article
+        if w.text != '\n' and not w.is_stop and not w.is_punct and not w.like_num and len(w.text.strip()) > 0:
+            # we add the lematized version of the word
+            normalized.append(str(w.lemma_))
 
-    #Now we can use the semmer, if provided
-    if stemmer is not None:
-        workingIter = (stemmer.stem(w) for w in workingIter)
-
-    #And the lemmer
-    if lemmer is not None:
-        workingIter = (lemmer.lemmatize(w) for w in workingIter)
-
-    #And remove the stopwords
-    if stopwordLst is not None:
-        workingIter = (w for w in workingIter if w not in stopwordLst)
-    #We will return a list with the stopwords removed
-    return list(workingIter)
+    return normalized
 
 def split_data(data, prob):
     """split data into fractions [prob, 1 - prob]"""

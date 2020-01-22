@@ -1,4 +1,3 @@
-import nltk #For POS tagging
 import sklearn #For generating some matrices
 import pandas #For DataFrames
 import numpy as np #For arrays
@@ -11,7 +10,7 @@ import os.path #For managing file paths
 import re
 import tarfile
 
-# from .proccessing import normalizeTokens, stop_words_basic, stemmer_basic, trainTestSplit
+from .proccessing import normalizeTokens, trainTestSplit, word_tokenize, sent_tokenize
 
 dataDirectory = '../data'
 
@@ -68,12 +67,12 @@ def _loadEmailZip(targetFile, category):
     return pandas.DataFrame(emailDict)
 
 def generateVecs(df, sents = False):
-    df['tokenized_text'] = df['text'].apply(lambda x: nltk.word_tokenize(x))
-    df['normalized_text'] = df['tokenized_text'].apply(lambda x: normalizeTokens(x, stopwordLst = stop_words_basic, stemmer = stemmer_basic))
+    df['tokenized_text'] = df['text'].apply(lambda x: word_tokenize(x))
+    df['normalized_text'] = df['tokenized_text'].apply(lambda x: normalizeTokens(x))
 
     if sents:
-        df['tokenized_sents'] = df['text'].apply(lambda x: [nltk.word_tokenize(s) for s in nltk.sent_tokenize(x)])
-        df['normalized_sents'] = df['tokenized_sents'].apply(lambda x: [normlizeTokens(s, stopwordLst = stop_words_nltk, stemmer = stemmer_basic) for s in x])
+        df['tokenized_sents'] = df['text'].apply(lambda x: [word_tokenize(s) for s in sent_tokenize(x)])
+        df['normalized_sents'] = df['tokenized_sents'].apply(lambda x: [normlizeTokens(s) for s in x])
 
     ngCountVectorizer = sklearn.feature_extraction.text.TfidfVectorizer(max_df=0.5, min_df=3, stop_words='english', norm='l2')
     newsgroupsVects = ngCountVectorizer.fit_transform([' '.join(l) for l in df['normalized_text']])

@@ -4,10 +4,9 @@ try:
 except ImportError:
     pass
 import numpy as np
-import nltk
 import gensim
 
-# from .proccessing import stemmer_basic, stop_words_basic, normalizeTokens
+from .proccessing import sent_tokenize, word_tokenize, normalizeTokens
 
 def vecToVar(vec):
     var = torch.autograd.Variable(torch.from_numpy(np.stack(vec)).unsqueeze(0))
@@ -33,8 +32,8 @@ def genVecSeq(target, model):
 
 def genWord2Vec(df, w2vDim):
     if 'normalized_sents' not in df:
-            df['tokenized_sents'] = df['text'].apply(lambda x: [nltk.word_tokenize(s) for s in nltk.sent_tokenize(x)])
-            df['normalized_sents'] = df['tokenized_sents'].apply(lambda x: [normalizeTokens(s, stopwordLst = stop_words_basic) for s in x])
+            df['tokenized_sents'] = df['text'].apply(lambda x: [word_tokenize(s) for s in sent_tokenize(x)])
+            df['normalized_sents'] = df['tokenized_sents'].apply(lambda x: [normalizeTokens(s) for s in x])
     vocab = df['normalized_sents'].sum()
 
     model = gensim.models.Word2Vec(vocab,
