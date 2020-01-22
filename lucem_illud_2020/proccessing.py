@@ -25,7 +25,14 @@ def sent_tokenize(word_list):
 def normalizeTokens(word_list, extra_stop=[]):
     #We can use a generator here as we just need to iterate over it
     normalized = []
+    if type(word_list) == list and len(word_list) == 1:
+        word_list = word_list[0]
+
+    if type(word_list) == list:
+        word_list = ' '.join([str(elem) for elem in word_list]) 
+
     doc = nlp(word_list.lower())
+
     if len(extra_stop) > 0:
         for stopword in extra_stop:
             lexeme = nlp.vocab[stopword]
