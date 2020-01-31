@@ -6,8 +6,10 @@ import random
 
 import spacy
 
-
-nlp = spacy.load("en")
+try:
+    nlp = spacy.load("en")
+except OSError:
+    nlp = spacy.load("en_core_web_sm")
 
 def word_tokenize(word_list):
     tokenized = []
