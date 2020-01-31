@@ -80,7 +80,7 @@ def plotMultiROC(clf, testDF):
 
 def plotConfusionMatrix(clf, testDF):
     predictions = clf.predict(np.stack(testDF['vect'], axis=0))
-    mat = sklearn.metrics.confusion_matrix(predictions, testDF['category'])
+    mat = sklearn.metrics.confusion_matrix(testDF['category'], predictions)
     seaborn.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
                     xticklabels=testDF['category'].unique(), yticklabels=testDF['category'].unique())
     plt.xlabel('true label')

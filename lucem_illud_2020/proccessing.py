@@ -14,7 +14,7 @@ def word_tokenize(word_list):
     doc = nlp(word_list)
     for token in doc:
         if not token.is_punct and len(token.text.strip()) > 0:
-            tokenized.append(str(token))
+            tokenized.append(token.text)
     return tokenized
 
 def sent_tokenize(word_list):
