@@ -10,6 +10,9 @@ import os.path #For managing file paths
 import re
 import tarfile
 
+import zipfile
+import sys
+
 from .proccessing import normalizeTokens, trainTestSplit, word_tokenize, sent_tokenize
 
 dataDirectory = '../data'
