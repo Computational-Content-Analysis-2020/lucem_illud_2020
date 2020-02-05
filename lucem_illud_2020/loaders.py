@@ -132,3 +132,45 @@ def loadReddit(holdBackFraction = .2):
     redditDf['category'] = [s.split(':')[0] for s in redditDf['subreddit']]
     print("Converting to vectors")
     return generateVecs(redditDf)
+
+
+def loadDavies(address, corpus_style="text", num_files=10000):
+    texts_raw = {}
+    for file in os.listdir(address + "/"):
+        if corpus_style in file:
+            print(file)
+            zfile = zipfile.ZipFile(address + "/" + file)
+            for file in zfile.namelist():
+                texts_raw[file] = []
+                with zfile.open(file) as f:
+                    for line in f:
+                        texts_raw[file].append(line)
+
+    tokenized_texts = {}
+    for files in texts_raw:
+        if len(texts) > num_files:
+            break
+        texts = clean_raw_text(texts_raw[files][1:])
+        for text in texts:
+            txts = lucem_illud_2020.word_tokenize(movie)
+            try:
+                tokenized_texts[txts[0][2:]] = txts[1:]
+            except IndexError:
+                continue
+    return tokenized_texts
+
+def clean_raw_text(texts_raw):
+    clean_texts = []
+    for text in texts_raw:
+        try:
+            text = text.decode("utf-8")
+            clean_text = text.replace(" \'m", "'m").replace(" \'ll", "'ll").replace(" \'re", "'re").replace(" \'s", "'s").replace(" \'re", "'re").replace(" n\'t", "n't").replace(" \'ve", "'ve").replace(" /'d", "'d")
+            clean_texts.append(clean_text)
+        except AttributeError:
+            # print("ERROR CLEANING")
+            # print(text)
+            continue
+        except UnicodeDecodeError:
+            # print("Unicode Error, Skip")
+            continue
+    return clean_texts

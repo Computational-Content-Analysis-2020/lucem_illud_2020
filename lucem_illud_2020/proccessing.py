@@ -11,6 +11,58 @@ try:
 except OSError:
     nlp = spacy.load("en_core_web_sm")
 
+
+def spacy_pos(word_list):
+    tags = []
+    # spacy expects a string to start doing the pos-tagging so we convert a list to a string
+    if type(word_list) == list:
+        word_list = ' '.join(word_list)
+    doc = nlp(word_list.lower())
+    for w in doc:
+        tags.append((w.text, w.tag_))
+    return tags
+
+def tag_sents_pos(sentences):
+    """
+    function which replicates NLTK pos tagging on sentences.
+    """
+    new_sents = []
+    for sentence in sentences:
+        new_sent = ' '.join(sentence)
+        new_sents.append(new_sent)
+    final_string = ' '.join(new_sents)
+    
+    doc = nlp(final_string)
+    
+    pos_sents = []
+    for sent in doc.sents:
+        pos_sent = []
+        for token in sent:
+            pos_sent.append((token.text, token.tag_))
+        pos_sents.append(pos_sent)
+    
+    return pos_sents
+
+def tag_sents_ner(sentences):
+    """
+    function which replicates NLTK ner tagging on sentences.
+    """
+    new_sents = []
+    for sentence in sentences:
+        new_sent = ' '.join(sentence)
+        new_sents.append(new_sent)
+    final_string = ' '.join(new_sents)
+    doc = nlp(final_string)
+    
+    ner_sents = []
+    for sent in doc.sents:
+        ner_sent = []
+        for ent in sent.ents:
+            ner_sent.append((ent.text, ent.label_))
+        ner_sents.append(pos_sent)
+    
+    return ner_sents
+
 def word_tokenize(word_list):
     tokenized = []
     doc = nlp(word_list)
