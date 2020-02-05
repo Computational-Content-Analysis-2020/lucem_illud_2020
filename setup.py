@@ -38,8 +38,7 @@ if __name__ == '__main__':
                 'scikit-image',
                 'IPython',
                 'spacy',
-                'Pillow',
-                'zipfile'
+                'Pillow'
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
