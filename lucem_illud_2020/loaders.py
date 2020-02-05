@@ -155,7 +155,7 @@ def loadDavies(address, corpus_style="text", num_files=10000):
             break
         texts = clean_raw_text(texts_raw[files][1:])
         for text in texts:
-            txts = lucem_illud_2020.word_tokenize(movie)
+            txts = word_tokenize(movie)
             try:
                 tokenized_texts[txts[0][2:]] = txts[1:]
             except IndexError:
