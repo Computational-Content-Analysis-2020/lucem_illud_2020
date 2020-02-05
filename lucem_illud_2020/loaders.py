@@ -151,7 +151,7 @@ def loadDavies(address, corpus_style="text", num_files=10000):
 
     tokenized_texts = {}
     for files in texts_raw:
-        if len(texts) > num_files:
+        if len(tokenized_texts) > num_files:
             break
         texts = clean_raw_text(texts_raw[files][1:])
         for text in texts:

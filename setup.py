@@ -39,6 +39,7 @@ if __name__ == '__main__':
                 'IPython',
                 'spacy',
                 'Pillow',
+                'zipfile'
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
