@@ -20,8 +20,9 @@ def plotSilhouette(n_clusters, X):
 
         size_cluster_i = ith_cluster_silhouette_values.shape[0]
         y_upper = y_lower + size_cluster_i
-
-        color = matplotlib.cm.spectral(float(i) / n_clusters)
+        
+        cmap = matplotlib.cm.get_cmap("nipy_spectral")
+        colors = cmap(float(i) / n_clusters)
         ax1.fill_betweenx(np.arange(y_lower, y_upper),
                           0, ith_cluster_silhouette_values,
                           facecolor=color, edgecolor=color, alpha=0.7)

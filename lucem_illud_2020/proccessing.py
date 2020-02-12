@@ -12,7 +12,7 @@ except OSError:
     nlp = spacy.load("en_core_web_sm")
 
 
-def spacy_pos(word_list):
+def spacy_pos(word_list, model=nlp):
     tags = []
     # spacy expects a string to start doing the pos-tagging so we convert a list to a string
     if type(word_list) == list:
@@ -22,7 +22,7 @@ def spacy_pos(word_list):
         tags.append((w.text, w.tag_))
     return tags
 
-def tag_sents_pos(sentences):
+def tag_sents_pos(sentences, model=nlp):
     """
     function which replicates NLTK pos tagging on sentences.
     """
@@ -43,7 +43,7 @@ def tag_sents_pos(sentences):
     
     return pos_sents
 
-def tag_sents_ner(sentences):
+def tag_sents_ner(sentences, model=nlp):
     """
     function which replicates NLTK ner tagging on sentences.
     """
@@ -63,7 +63,7 @@ def tag_sents_ner(sentences):
     
     return ner_sents
 
-def word_tokenize(word_list):
+def word_tokenize(word_list, model=nlp):
     tokenized = []
     doc = nlp(word_list)
     for token in doc:
@@ -71,12 +71,12 @@ def word_tokenize(word_list):
             tokenized.append(token.text)
     return tokenized
 
-def sent_tokenize(word_list):
+def sent_tokenize(word_list, model=nlp):
     doc = nlp(word_list)
     sentences = [sent.string.strip() for sent in doc.sents]
     return sentences
 
-def normalizeTokens(word_list, extra_stop=[]):
+def normalizeTokens(word_list, extra_stop=[], model=nlp):
     #We can use a generator here as we just need to iterate over it
     normalized = []
     if type(word_list) == list and len(word_list) == 1:
