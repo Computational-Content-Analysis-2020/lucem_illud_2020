@@ -22,7 +22,7 @@ def plotSilhouette(n_clusters, X):
         y_upper = y_lower + size_cluster_i
         
         cmap = matplotlib.cm.get_cmap("nipy_spectral")
-        colors = cmap(float(i) / n_clusters)
+        color = cmap(float(i) / n_clusters)
         ax1.fill_betweenx(np.arange(y_lower, y_upper),
                           0, ith_cluster_silhouette_values,
                           facecolor=color, edgecolor=color, alpha=0.7)
@@ -41,7 +41,9 @@ def plotSilhouette(n_clusters, X):
     ax1.set_xticks([-0.1, 0, 0.2, 0.4, 0.6, 0.8, 1])
 
     # 2nd Plot showing the actual clusters formed
-    colors = matplotlib.cm.spectral(cluster_labels.astype(float) / n_clusters)
+    cmap = matplotlib.cm.get_cmap("nipy_spectral")
+    colors = cmap(float(i) / n_clusters)
+
     ax2.scatter(reduced_data[:, 0], reduced_data[:, 1], marker='.', s=30, lw=0, alpha=0.7,
                 c=colors)
 
