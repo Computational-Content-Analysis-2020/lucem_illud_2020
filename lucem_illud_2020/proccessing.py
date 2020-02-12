@@ -74,7 +74,7 @@ def word_tokenize(word_list, model=nlp):
     # since we're only tokenizing, I remove RAM intensive operations and increase max text size
     model.remove_pipe("parser")
     model.remove_pipe("tagger")
-    model.remove_pipe("entity")
+    model.remove_pipe("ner")
     model.max_length = 1500000
 
     doc = model(word_list)
@@ -100,7 +100,7 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp):
     # since we're only normalizing, I remove RAM intensive operations and increase max text size
     model.remove_pipe("parser")
     model.remove_pipe("tagger")
-    model.remove_pipe("entity")
+    model.remove_pipe("ner")
     model.max_length = 1500000
 
     doc = model(word_list.lower())
