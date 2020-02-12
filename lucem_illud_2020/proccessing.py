@@ -17,7 +17,7 @@ def spacy_pos(word_list, model=nlp):
     # spacy expects a string to start doing the pos-tagging so we convert a list to a string
     if type(word_list) == list:
         word_list = ' '.join(word_list)
-    doc = nlp(word_list.lower())
+    doc = model(word_list.lower())
     for w in doc:
         tags.append((w.text, w.tag_))
     return tags
@@ -32,7 +32,7 @@ def tag_sents_pos(sentences, model=nlp):
         new_sents.append(new_sent)
     final_string = ' '.join(new_sents)
     
-    doc = nlp(final_string)
+    doc = model(final_string)
     
     pos_sents = []
     for sent in doc.sents:
@@ -52,7 +52,7 @@ def tag_sents_ner(sentences, model=nlp):
         new_sent = ' '.join(sentence)
         new_sents.append(new_sent)
     final_string = ' '.join(new_sents)
-    doc = nlp(final_string)
+    doc = model(final_string)
     
     ner_sents = []
     for sent in doc.sents:
@@ -64,15 +64,27 @@ def tag_sents_ner(sentences, model=nlp):
     return ner_sents
 
 def word_tokenize(word_list, model=nlp):
+    
     tokenized = []
-    doc = nlp(word_list)
+    if type(word_list) == list and len(word_list) == 1:
+        word_list = word_list[0]
+
+    if type(word_list) == list:
+        word_list = ' '.join([str(elem) for elem in word_list]) 
+    # since we're only tokenizing, I remove RAM intensive operations and increase max text size
+    model.remove_pipe("parser")
+    model.remove_pipe("tagger")
+    model.remove_pipe("entity")
+    model.max_length = 1500000
+
+    doc = model(word_list)
     for token in doc:
         if not token.is_punct and len(token.text.strip()) > 0:
             tokenized.append(token.text)
     return tokenized
 
 def sent_tokenize(word_list, model=nlp):
-    doc = nlp(word_list)
+    doc = model(word_list)
     sentences = [sent.string.strip() for sent in doc.sents]
     return sentences
 
@@ -85,7 +97,13 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp):
     if type(word_list) == list:
         word_list = ' '.join([str(elem) for elem in word_list]) 
 
-    doc = nlp(word_list.lower())
+    # since we're only normalizing, I remove RAM intensive operations and increase max text size
+    model.remove_pipe("parser")
+    model.remove_pipe("tagger")
+    model.remove_pipe("entity")
+    model.max_length = 1500000
+
+    doc = model(word_list.lower())
 
     if len(extra_stop) > 0:
         for stopword in extra_stop:
