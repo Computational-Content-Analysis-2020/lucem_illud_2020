@@ -137,7 +137,7 @@ def loadReddit(holdBackFraction = .2):
     return generateVecs(redditDf)
 
 
-def loadDavies(address, corpus_style="text", num_files=10000):
+def loadDavies(address, corpus_style="text", num_files=10000, return_raw=False):
     texts_raw = {}
     for file in os.listdir(address + "/"):
         if corpus_style in file:
@@ -148,6 +148,9 @@ def loadDavies(address, corpus_style="text", num_files=10000):
                 with zfile.open(file) as f:
                     for line in f:
                         texts_raw[file].append(line)
+
+    if return_raw:
+        return(texts_raw)
 
     tokenized_texts = {}
     for files in texts_raw:
