@@ -14,6 +14,49 @@ import seaborn #Makes plots look nice, also heatmaps
 import scipy as sp #for interp
 import pandas
 
+
+def kl_divergence(X, Y):
+    P = X.copy()
+    Q = Y.copy()
+    P.columns = ['P']
+    Q.columns = ['Q']
+    df = Q.join(P).fillna(0)
+    p = df.iloc[:,1]
+    q = df.iloc[:,0]
+    D_kl = scipy.stats.entropy(p, q)
+    return D_kl
+
+def chi2_divergence(X,Y):
+    P = X.copy()
+    Q = Y.copy()
+    P.columns = ['P']
+    Q.columns = ['Q']
+    df = Q.join(P).fillna(0)
+    p = df.iloc[:,1]
+    q = df.iloc[:,0]
+    return scipy.stats.chisquare(p, q).statistic
+
+def Divergence(corpus1, corpus2, difference="KL"):
+    """Difference parameter can equal KL, Chi2, or Wass"""
+    freqP = nltk.FreqDist(corpus1)
+    P = pandas.DataFrame(list(freqP.values()), columns = ['frequency'], index = list(freqP.keys()))
+    freqQ = nltk.FreqDist(corpus2)
+    Q = pandas.DataFrame(list(freqQ.values()), columns = ['frequency'], index = list(freqQ.keys()))
+    if difference == "KL":
+        return kl_divergence(P, Q)
+    elif difference == "Chi2":
+        return chi2_divergence(P, Q)
+    elif difference == "KS":
+        try:
+            return scipy.stats.ks_2samp(P['frequency'], Q['frequency']).statistic
+        except:
+            return scipy.stats.ks_2samp(P['frequency'], Q['frequency'])
+    elif difference == "Wasserstein":
+        try:
+            return scipy.stats.wasserstein_distance(P['frequency'], Q['frequency'], u_weights=None, v_weights=None).statistic
+        except:
+            return scipy.stats.wasserstein_distance(P['frequency'], Q['frequency'], u_weights=None, v_weights=None)
+
 def evaluateClassifier(clf, testDF):
     predictions = clf.predict(np.stack(testDF['vect'], axis=0))
     classes = []
