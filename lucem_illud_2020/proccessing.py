@@ -72,12 +72,10 @@ def word_tokenize(word_list, model=nlp):
     if type(word_list) == list:
         word_list = ' '.join([str(elem) for elem in word_list]) 
     # since we're only tokenizing, I remove RAM intensive operations and increase max text size
-    model.remove_pipe("parser")
-    model.remove_pipe("tagger")
-    model.remove_pipe("ner")
-    model.max_length = 1500000
 
-    doc = model(word_list)
+    model.max_length = 1500000
+    doc = model(word_list, disable=["parser", "tagger", "ner"])
+    
     for token in doc:
         if not token.is_punct and len(token.text.strip()) > 0:
             tokenized.append(token.text)
@@ -98,12 +96,9 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp):
         word_list = ' '.join([str(elem) for elem in word_list]) 
 
     # since we're only normalizing, I remove RAM intensive operations and increase max text size
-    model.remove_pipe("parser")
-    model.remove_pipe("tagger")
-    model.remove_pipe("ner")
-    model.max_length = 1500000
 
-    doc = model(word_list.lower())
+    model.max_length = 1500000
+    doc = model(word_list.lower(), disable=["parser", "tagger", "ner"])
 
     if len(extra_stop) > 0:
         for stopword in extra_stop:
