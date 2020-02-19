@@ -105,13 +105,18 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp, lemma=True):
             lexeme = nlp.vocab[stopword]
             lexeme.is_stop = True
 
-    for w in doc:
-        # if it's not a stop word or punctuation mark, add it to our article
-        if w.text != '\n' and not w.is_stop and not w.is_punct and not w.like_num and len(w.text.strip()) > 0:
+    # we check if we want lemmas or not earlier to avoid checking every time we loop
+    if lemma:
+        for w in doc:
+            # if it's not a stop word or punctuation mark, add it to our article
+            if w.text != '\n' and not w.is_stop and not w.is_punct and not w.like_num and len(w.text.strip()) > 0:
             # we add the lematized version of the word
-            if lemma:
                 normalized.append(str(w.lemma_))
-            else:
+    else:
+        for w in doc:
+            # if it's not a stop word or punctuation mark, add it to our article
+            if w.text != '\n' and not w.is_stop and not w.is_punct and not w.like_num and len(w.text.strip()) > 0:
+            # we add the lematized version of the word
                 normalized.append(str(w.text.strip()))
 
     return normalized
