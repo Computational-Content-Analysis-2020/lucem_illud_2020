@@ -86,7 +86,7 @@ def sent_tokenize(word_list, model=nlp):
     sentences = [sent.string.strip() for sent in doc.sents]
     return sentences
 
-def normalizeTokens(word_list, extra_stop=[], model=nlp):
+def normalizeTokens(word_list, extra_stop=[], model=nlp, lemma=True):
     #We can use a generator here as we just need to iterate over it
     normalized = []
     if type(word_list) == list and len(word_list) == 1:
@@ -109,7 +109,10 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp):
         # if it's not a stop word or punctuation mark, add it to our article
         if w.text != '\n' and not w.is_stop and not w.is_punct and not w.like_num and len(w.text.strip()) > 0:
             # we add the lematized version of the word
-            normalized.append(str(w.lemma_))
+            if lemma:
+                normalized.append(str(w.lemma_))
+            else:
+                normalized.append(str(w.text.strip()))
 
     return normalized
 
