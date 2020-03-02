@@ -38,7 +38,12 @@ if __name__ == '__main__':
                 'scikit-image',
                 'IPython',
                 'spacy',
-                'Pillow'
+                'Pillow',
+                'transformers==2.4.1',
+                'torch',
+                'tensorflow',
+                'keras'
+
         ],
         classifiers = [
         'Development Status :: 1 - Planning',
