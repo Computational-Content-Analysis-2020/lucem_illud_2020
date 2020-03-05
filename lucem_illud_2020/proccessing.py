@@ -63,7 +63,7 @@ def tag_sents_ner(sentences, model=nlp):
     
     return ner_sents
 
-def word_tokenize(word_list, model=nlp):
+def word_tokenize(word_list, model=nlp, MAX_LEN=1500000):
     
     tokenized = []
     if type(word_list) == list and len(word_list) == 1:
@@ -73,7 +73,7 @@ def word_tokenize(word_list, model=nlp):
         word_list = ' '.join([str(elem) for elem in word_list]) 
     # since we're only tokenizing, I remove RAM intensive operations and increase max text size
 
-    model.max_length = 1500000
+    model.max_length = MAX_LEN
     doc = model(word_list, disable=["parser", "tagger", "ner"])
     
     for token in doc:
@@ -86,7 +86,7 @@ def sent_tokenize(word_list, model=nlp):
     sentences = [sent.string.strip() for sent in doc.sents]
     return sentences
 
-def normalizeTokens(word_list, extra_stop=[], model=nlp, lemma=True):
+def normalizeTokens(word_list, extra_stop=[], model=nlp, lemma=True, MAX_LEN=1500000):
     #We can use a generator here as we just need to iterate over it
     normalized = []
     if type(word_list) == list and len(word_list) == 1:
@@ -97,7 +97,7 @@ def normalizeTokens(word_list, extra_stop=[], model=nlp, lemma=True):
 
     # since we're only normalizing, I remove RAM intensive operations and increase max text size
 
-    model.max_length = 1500000
+    model.max_length = MAX_LEN
     doc = model(word_list.lower(), disable=["parser", "tagger", "ner"])
 
     if len(extra_stop) > 0:
