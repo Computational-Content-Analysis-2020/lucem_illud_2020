@@ -82,7 +82,7 @@ def generateVecs(df, sents = False):
     df['vect'] = [np.array(v).flatten() for v in newsgroupsVects.todense()]
     return df
 
-def loadNewsGroups(categories = ['comp.sys.mac.hardware', 'comp.windows.x', 'misc.forsale', 'rec.autos']):
+def loadNewsGroups(categories = ['comp.sys.mac.hardware', 'comp.windows.x', 'misc.forsale', 'rec.autos'], dataDirectory=dataDirectory):
     newsgroupsCategories = categories
     newsgroups = sklearn.datasets.fetch_20newsgroups(subset='train', data_home = dataDirectory)
     newsgroupsDF = pandas.DataFrame(columns = ['text', 'category', 'source_file'])
@@ -95,7 +95,7 @@ def loadNewsGroups(categories = ['comp.sys.mac.hardware', 'comp.windows.x', 'mis
     print("Converting to vectors")
     return generateVecs(newsgroupsDF)
 
-def loadSenateSmall():
+def loadSenateSmall(dataDirectory=dataDirectory):
     print("Loading senate data")
     senReleasesDF = pandas.read_csv(os.path.join(dataDirectory, "ObamaClintonReleases.csv"), index_col=0)
     senReleasesDF = senReleasesDF.dropna(axis=0, how='any')
@@ -104,7 +104,7 @@ def loadSenateSmall():
     print("Converting to vectors")
     return generateVecs(senReleasesDF)
 
-def loadSenateLarge():
+def loadSenateLarge(dataDirectory=dataDirectory):
     dataDir = os.path.join(dataDirectory, 'grimmerPressReleases')
     senReleasesDF = pandas.DataFrame()
 
@@ -116,7 +116,7 @@ def loadSenateLarge():
     print("Converting to vectors")
     return generateVecs(senReleasesDF)
 
-def loadSpam(holdBackFraction = .2):
+def loadSpam(holdBackFraction = .2, dataDirectory=dataDirectory):
     print("Loading Spam")
     spamDF = _loadEmailZip(os.path.join(dataDirectory,'Spam_Data/20021010_spam.tar.bz2'), 'spam')
     print("Loading Ham")
@@ -128,7 +128,7 @@ def loadSpam(holdBackFraction = .2):
     print("Converting to vectors")
     return generateVecs(spamDF)
 
-def loadReddit(holdBackFraction = .2):
+def loadReddit(holdBackFraction = .2, dataDirectory=dataDirectory):
     print("Loading Reddit data")
     redditDf = pandas.read_csv(os.path.join(dataDirectory,'reddit.csv'))
     redditDf = redditDf.dropna()
